@@ -1,0 +1,170 @@
+
+/*
+ * LED.c
+ *
+ ModuleName: LED
+ Author: Ahmedmohamed
+ Purpose: Source file for LED Driver
+ */
+
+/**************************************************************Includes*********************************************************************/
+
+
+#include "LED.h"
+#include "MCAL/SYSTICK/SYSTICK.h"
+
+
+/*******************************************************Functions Definitions**********************************************************/
+
+/***************************************************************
+Function Name   : LED_blueLight
+Inputs          : void
+Outputs         : void
+Reentrancy      : Non-Reentrant
+Synchronous     : ASynchronous
+Description     : Turn on blue led
+ ****************************************************************/
+
+void LED_blueLight(void)
+{
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)RED_LED, (uint8_t)OFF);
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE,(uint8_t) BLUE_LED, (uint8_t)ON); /* Turn on LED*/
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE,(uint8_t) GREEN_LED,(uint8_t) OFF); /* Turn on LED*/
+
+}
+
+/***************************************************************
+Function Name   : LED_greenLight
+Inputs          : void
+Outputs         : void
+Reentrancy      : Non-Reentrant
+Synchronous     : ASynchronous
+Description     : Turn on green led
+ ****************************************************************/
+
+void LED_greenLight(void)
+{
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE,(uint8_t) RED_LED, (uint8_t) OFF); /*Turn on LED*/
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)BLUE_LED, (uint8_t)OFF); /* Turn on LED*/
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)GREEN_LED, (uint8_t)ON); /* Turn on LED*/
+
+}
+
+/***************************************************************
+Function Name   : LED_redLight
+Inputs          : void
+Outputs         : void
+Reentrancy      : Non-Reentrant
+Synchronous     : ASynchronous
+Description     : Turn on red led
+ ****************************************************************/
+
+void LED_redLight(void)
+{
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)RED_LED,(uint8_t) ON); /*Turn on LED*/
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)BLUE_LED, (uint8_t)OFF); /* Turn on LED*/
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)GREEN_LED, (uint8_t)OFF); /* Turn on LED*/
+
+}
+
+/***************************************************************
+Function Name   : LED_whiteLight
+Inputs          : void
+Outputs         : void
+Reentrancy      : Non-Reentrant
+Synchronous     : ASynchronous
+Description     : Turn on white led
+ ****************************************************************/
+
+void LED_whiteLight(void)
+{
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)RED_LED, (uint8_t)ON); /* Turn on LED*/
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)BLUE_LED, (uint8_t)ON); /* Turn on LED*/
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE,(uint8_t) GREEN_LED, (uint8_t)ON); /* Turn on LED*/
+
+}
+/***************************************************************
+Function Name   : LEDS_off
+Inputs          : void
+Outputs         : void
+Reentrancy      : Non-Reentrant
+Synchronous     : ASynchronous
+Description     : Turn off All leds
+ ****************************************************************/
+void LEDS_off(void)
+{
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE,(uint8_t) RED_LED, (uint8_t)OFF); /*Turn on LED*/
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)BLUE_LED, (uint8_t)OFF); /* Turn on LED*/
+    DIO_writePin((uint32_t)GPIO_PORTF_BASE, (uint8_t)GREEN_LED, (uint8_t)OFF); /* Turn on LED*/
+}
+
+/***************************************************************
+Function Name   : LED_read
+Inputs          : uint8_t a_LED, uint32_t a_base
+Outputs         : uint8_t LED
+Reentrancy      : Non-Reentrant
+Synchronous     : ASynchronous
+Description     : Return the value of the LED
+ ****************************************************************/
+uint8_t LED_read (uint8_t a_led , uint32_t a_base)
+{
+    uint8_t LED = DIO_readPin(a_led, a_base);
+    return  (LED & a_led) ? 1 : 0;
+}
+
+//void blink_led(uint8_t led)
+//{
+//    static uint32_t BlinkRed_timeDelay = 0;
+//    static uint8_t BlinkRed_Flag = 0;
+//    uint8_t condition1 = (BlinkRed_Flag == 0);
+//    uint8_t condition3 = (BlinkRed_Flag != 0);
+//    uint8_t condition2 = ((SYSTICK_Flag - BlinkRed_timeDelay) >= (uint32_t)1000);
+//    switch (led)
+//    {
+//    case 2:
+//        if (condition1 && condition2  )
+//
+//        {
+//            BlinkRed_Flag = 1;
+//            BlinkRed_timeDelay = SYSTICK_Flag;
+//            LED_redLight();
+//        }
+//        else if (condition3 && condition2 )
+//        {
+//            BlinkRed_Flag = 0;
+//            BlinkRed_timeDelay = SYSTICK_Flag;
+//            LEDS_off();
+//        }
+//        break;
+//    case 3:
+//
+//        if (condition1 && condition2  )
+//        {
+//            BlinkRed_Flag = 1;
+//            BlinkRed_timeDelay = SYSTICK_Flag;
+//            LED_blueLight();
+//        }
+//        else if (condition3 && condition2 )
+//        {
+//            BlinkRed_Flag = 0;
+//            BlinkRed_timeDelay = SYSTICK_Flag;
+//            LEDS_off();
+//        }
+//        break;
+//    case 1:
+//
+//        if (condition1 && condition2  )
+//        {
+//            BlinkRed_Flag = 1;
+//            BlinkRed_timeDelay = SYSTICK_Flag;
+//            LED_greenLight();
+//        }
+//        else if (condition3 && condition2 )
+//        {
+//            BlinkRed_Flag = 0;
+//            BlinkRed_timeDelay = SYSTICK_Flag;
+//            LEDS_off();
+//        }
+//        break;
+//    }
+//}
